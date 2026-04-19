@@ -8,6 +8,8 @@ public abstract class Card : MonoBehaviour
     [field: SerializeField] public int ManaCost {  get; private set; }
     [field: SerializeField] public int ChangeFrequency { get; private set; }
 
+    [field: SerializeField] public List<FrequencyType> NeedTypes = new List<FrequencyType>();
+
     protected Player _player;
     protected ICommand _cardUse;
     protected EnemyManager _creatureManager;
@@ -27,7 +29,20 @@ public abstract class Card : MonoBehaviour
 
     public virtual bool CanBuy()
     {
-        return ManaCost <= _player.CurMana && _player.UseCard && !_battleManager.InFight;
+        return ManaCost <= _player.CurMana && _player.UseCard && !_battleManager.InFight && NeedFrequency();
+    }
+
+    public bool NeedFrequency()
+    {
+        FrequencyType frequencyType = _player.GetFrequency();
+        foreach (var item in NeedTypes)
+        {
+            if(item == frequencyType)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void Buy()

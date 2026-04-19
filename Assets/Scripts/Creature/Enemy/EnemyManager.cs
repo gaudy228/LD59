@@ -44,7 +44,7 @@ public class EnemyManager : MonoBehaviour
 
     public void Initialization()
     {
-        
+        NewWave();
     }
 
     public void NewWave()
@@ -61,18 +61,20 @@ public class EnemyManager : MonoBehaviour
 
         UpdateEnemy();
 
-        _buttonsNewWave[_curWave].interactable = false;
+        if(_curWave > 0)
+        {
+            _buttonsNewWave[_curWave].interactable = false;
+        }
 
         _curWave++;
 
-        if(_curWave < _enemyWaveSOs.Count)
+        if(_curWave < _enemyWaveSOs.Count && _curWave > 1)
         {
-            
             _buttonsNewWave[_curWave].interactable = true;
         }
         else
         {
-            _lastWave = true;
+            //_lastWave = true;
         }
     }
 
@@ -108,12 +110,13 @@ public class EnemyManager : MonoBehaviour
     {
         if (_lastWave)
         {
-            OnWinGame?.Invoke();
+            //OnWinGame?.Invoke();
         }
         if (Enemys.Count <= 0)
         {
-            OnNewWave?.Invoke();
-            _wavePanel.SetActive(true);
+            OnWinGame?.Invoke();
+            //OnNewWave?.Invoke();
+            //_wavePanel.SetActive(true);
         }
     }
 }

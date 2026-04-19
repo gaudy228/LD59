@@ -34,9 +34,4 @@ public class CardCursedHealing : Card
 
         _player.UseCard = true;
     }
-
-    public override bool CanBuy()
-    {
-        return base.CanBuy() && _player.GetFrequency() != FrequencyType.Middle;
-    }
 }

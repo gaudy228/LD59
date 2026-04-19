@@ -2,6 +2,9 @@ using UnityEngine;
 
 public abstract class Creature : MonoBehaviour
 {
+    private const int _frequencyLow = 33;
+    private const int _frequencyMiddle = 66;
+
     [field: SerializeField] public int MaxHealth { get; private set; }
     [field: SerializeField] public int CurHealth { get; private set; }
     [field: SerializeField] public int MaxArmor { get; private set; }
@@ -26,7 +29,7 @@ public abstract class Creature : MonoBehaviour
     {
         ChangeHealth(MaxHealth);
         ChangeArmor(StartArmor);
-        ChangeFrequency(StartFrequency);
+        ChangeFrequency(Random.Range(0, MaxFrequency));
     }
 
     public virtual void ChangeHealth(int amount)
@@ -68,11 +71,11 @@ public abstract class Creature : MonoBehaviour
 
     public FrequencyType GetFrequency()
     {
-        if((float)CurFrequency / (float)MaxFrequency <= 1f / 3f)
+        if(CurFrequency <= _frequencyLow)
         {
             return FrequencyType.Low;
         }
-        else if ((float)CurFrequency / (float)MaxFrequency <= 2f / 3f)
+        else if (CurFrequency <= _frequencyMiddle)
         {
             return FrequencyType.Middle;
         }
